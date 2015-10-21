@@ -1,0 +1,16 @@
+<h1>Admin page</h1>
+
+<% @users.each do |user| %>
+<table>
+  <tr>
+    <td>
+      <%= user.firstname %>
+    </td> 
+  <tr>
+  <tr>
+    <td><%= link_to "delete", admin_user_path(user), method: :delete, confirm: "You sure?" %>)</td>
+  </tr>   
+  <% end %>
+</tr>
+
+</table>

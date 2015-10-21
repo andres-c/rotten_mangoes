@@ -1,8 +1,10 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
+  helper_method :admin?
   protect_from_forgery with: :exception
 
+  protected 
   def restrict_access
     if !current_user
       flash[:alert] = "You must log in."
@@ -15,4 +17,19 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :current_user  
+
+  def admin?
+    current_user.is_admin
+  end
+
+  
+
+  def authorize
+    unless admin?
+      flash[:error] = "unauthorized access"
+      redirect_to movies_path
+      false
+    end
+  end
 end
+
