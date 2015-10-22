@@ -1,6 +1,10 @@
 class MoviesController < ApplicationController
   def index
+     @movietimes = [["All",""],["Under 90 minutes", "0:90"], ["Between 90 and 120 minutes","90:120"], ["Over 120 minutes", "120:9999999999"]]
      @movies = Movie.all
+     movie_duration = params[:runtime_in_minutes].split(':') if params.has_key?(:runtime_in_minutes) and not params[:runtime_in_minutes].empty?
+     @movies = @movies.by_search(params[:search]) if params.has_key?(:search) and not params[:search].empty?
+     @movies = @movies.by_duration(movie_duration[0], movie_duration[1]) if params.has_key?(:runtime_in_minutes) and not params[:runtime_in_minutes].empty?
   end
 
   def show
@@ -26,10 +30,10 @@ class MoviesController < ApplicationController
   end
 
   def update
-    @movie = Moview.find(param[:id])
+    @movie = Movie.find(params[:id])
 
     if @movie.update_attributes(movie_params)
-      redirect_to_movie_path
+      redirect_to movie_path
     else
       render :edit
     end

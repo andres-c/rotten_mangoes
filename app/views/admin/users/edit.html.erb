@@ -1,8 +1,8 @@
-
+<%= link_to "Admin Page", admin_users_path %>
 <h2>Edit this user.</h2>
 
-<%= form_for [:is_admin, @user] do |f| %>
-  <%= render "shared/errors", object: @user %>
+<%= form_for [:admin, @user] do |f| %>
+  
   <div>
     <%= f.label "email" %><br>
     <%= f.text_field "email" %>

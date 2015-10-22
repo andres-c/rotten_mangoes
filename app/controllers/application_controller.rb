@@ -19,17 +19,15 @@ class ApplicationController < ActionController::Base
   helper_method :current_user  
 
   def admin?
-    current_user.is_admin
+    current_user && current_user.is_admin
   end
-
-  
 
   def authorize
     unless admin?
       flash[:error] = "unauthorized access"
       redirect_to movies_path
-      false
     end
   end
+  
 end
 

@@ -2,18 +2,27 @@ class Admin::UsersController < ApplicationController
   before_filter :authorize
 
   def index
-    @users = User.all(params[:all])
+    @users = User.page(params[:page]).per(11)
   end
 
   def new
     @user = User.new
   end
 
+  def show
+    @user = User.find(params[:id])
+    redirect_to edit_admin_user_path
+  end
+
+  def edit
+    @user = User.find(params[:id])
+  end
+
   def destroy
     @user = User.find(params[:id])
     @user.destroy
     if @user.destroy
-      #redirect_to admin_users_path
+      redirect_to admin_users_path
 
       # Tell the UserMailer to send a welcome email after save
     #   UserMailer.delete_email(@user).deliver_now

@@ -1,6 +1,6 @@
-<h1>Sign Up</h1>
-<%= form_for [:is_admin, @user] do |f| %>
-  <%= render "shared/errors", object: @user %>
+<%= link_to "Admin Page", admin_users_path %>
+<h1>Create User</h1>
+<%= form_for [:admin, @user] do |f| %>
   <div>
     <%= f.label "email" %><br>
     <%= f.text_field "email" %>

@@ -27,6 +27,10 @@ class Movie < ActiveRecord::Base
 
   mount_uploader :image, ImageUploader
 
+  scope :by_duration, lambda {|start, finish| where("runtime_in_minutes >= ? AND runtime_in_minutes <= ?", start, finish)}
+
+  scope :by_search, lambda {|search| where("title LIKE ? or director LIKE ?", "%#{search}%" , "%#{search}%")}
+
   protected
 
   def release_date_is_in_the_future
